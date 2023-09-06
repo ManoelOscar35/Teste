@@ -1,0 +1,112 @@
+<header id="topo">
+    <nav>
+        <p class="p">Survey ToGo Studio</p>
+        <div id="navegacao">
+            <ul>
+                <li>File</li>
+                <li>Survey</li>
+                <li>Tools</li>
+                <li>Question</li>
+                <li>Results</li>
+                <li>Language</li>
+                <li>View</li>
+                <li>Window</li>
+                <li>Help</li>
+            </ul>
+            <mat-divider></mat-divider>
+            <div style="padding: 5px 0 5px 0;">
+                <button (click)="sc();">Single Choice</button>   
+            </div>
+            <mat-divider></mat-divider>
+        </div>
+    </nav>
+</header>
+<main >
+    <div id="main-background-color">
+        <h1 class="titulo">CAPI TO CAWI</h1>
+        <div class="background-color">
+            <h3>Mode:</h3>
+            <div class="radios">
+                <input type="radio">
+                <p class="p-radios">Draft</p>
+            </div>
+            <div class="radios">
+                <input type="radio">
+                <p class="p-radios">Test [Deployed]</p>
+            </div>
+            <div class="radios">
+                <input type="radio">
+                <p class="p-radios">Production [Deployed]</p>
+            </div>
+            <div class="radios">
+                <input type="radio">
+                <p class="p-radios">Closed</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="border">
+            <div class="col-1">
+                <h4>Survey Tree</h4>
+                <mat-divider></mat-divider>
+            </div>
+            <p id="m">{{singleChoice}}</p>
+        </div>
+        <div class="col-1">
+            <p>Question Type:
+                <select>
+                    <option>Single Choice</option> 
+                </select>
+                <input type="checkbox" style="margin-left: 5px;"> Dummy (Hidden)
+                <input type="checkbox"> Read Only
+                <input type="checkbox"> RIL (Inhert)
+            </p>
+            <p id="bottom">
+                Test setting (Plain Text Only)
+                <select>
+                    <option>Default (Bold)</option> 
+                </select>
+            </p> 
+            <div>
+                <div id="flex">
+                    <p style="margin-right: 10px;" routerLink="/question">Question</p> 
+                    <p routerLink="/answer">Answers</p>
+                </div>
+                <div>
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+        <div class="border-1">
+            <h2>{{question}}</h2>
+            <div *ngIf="typeAnswers == radio" style="margin: 10px;">
+                <input type="radio" />{{answer1}}
+                <br>
+                <br>
+                <input type="radio" />{{answer2}}
+            </div>
+            <div *ngIf="typeAnswers == selecionar" style="margin: 10px;">
+                <select name="answers">
+                    <option>{{answer1}}</option>
+                    <option>{{answer2}}</option>
+                </select>
+            </div>
+            <div *ngIf="typeAnswers == caixa" style="margin: 10px;">
+                    {{answer1}}<br>
+                    {{answer2}}
+            </div>
+            <div *ngIf="typeAnswers == links" style="margin: 10px;">
+                <a href="#">{{answer1}}</a>
+                <br>
+                <a href="#">{{answer2}}</a>
+            </div>
+            <div *ngIf="typeAnswers == normal" style="margin: 10px;">
+                <p href="#">{{answer1}}</p>
+                <br>
+                <p href="#">{{answer2}}</p>
+            </div>
+        </div>
+    </div>
+</main>
+
+

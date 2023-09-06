@@ -1,0 +1,50 @@
+.btn {
+    margin-right: 10px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    background-color: #fff;
+    width: 50px;
+    height: 30px;
+    cursor: pointer;
+}
+
+.inline {
+    display: inline;
+    margin-right: 250px;
+}
+
+.index {
+    position: relative;
+    bottom: 17px;
+    left: 280px;
+
+}
+
+#btn {
+    width: 300; 
+    height: 25px; 
+    float: right; 
+    position: relative; 
+    bottom: 45px;
+    left: 50px;
+    cursor: pointer;
+}
+
+input {
+    width: 80px;
+    height: 30px;
+    margin-right: 7px;
+}
+
+#select {
+    width: 300px;
+    height: 30px;
+}
+
+.margin-bottom {
+    margin-bottom: 15px;
+    margin-top: 15px;
+}
+
+
+  

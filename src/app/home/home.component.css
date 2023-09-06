@@ -1,0 +1,119 @@
+/* TOPO */
+
+mat-divider {
+    color: #e0e0d1;
+}
+
+.p {
+    margin: 5px;
+}
+
+#navegacao {
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#navegacao li { 
+    float: left;
+    padding: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+    list-style: none;
+}
+
+#select {
+    width: 40px;
+    height: 20px;
+    margin-left: 5px;
+}
+
+/* MAIN */
+
+#main-background-color {
+    background-color: #cce0ff;
+}
+
+.titulo {
+    margin: 20px 5px 0 30px;
+    color: #fff;
+}
+
+.background-color {
+    display: flex;
+    flex-direction: row;
+    margin-top: 50px;
+    margin-left: 5px;
+    margin-bottom: 5px;
+}
+
+.radios {
+    margin: 5px;
+
+}
+
+.p-radios {
+    margin-top: -20px;
+    margin-left: 20px;
+    margin-right: 10px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.border {
+    border-right: 4px solid #ebebe0;
+    width: 300px;
+    height: 500px;
+}
+
+#m {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+#mr {
+    margin-right: 15px;
+}
+
+.col-1 {
+    margin-top: 5px;
+}
+
+#bottom {
+    margin-top: 5px;
+}
+
+mat-tab-group {
+    width: 220px;
+}
+
+#flex {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.border-1 {
+    border-left: 4px solid #ebebe0;
+    width: 300px;
+    height: 500px;
+}
+
+.border-1 input {
+    margin-right: 5px;
+}
+
+
+
+
+
+
+
+
+
+

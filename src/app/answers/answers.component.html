@@ -1,0 +1,42 @@
+<div>
+    <button class="btn" routerLink="/add-answers">Edit</button>
+    <button class="btn" (click)="delete();">Delete</button>
+    <div style="margin-bottom: 100px;">
+        <p class="inline">Text</p>
+        <p class="inline">Index</p>
+        <p style="margin-top: 15px;">{{answer1}}</p>
+        <p class="index">{{index}}</p>
+        <p style="margin-top: 15px;">{{answer2}}</p>
+        <p class="index">{{index}}</p>
+    </div>
+    <div>
+        <router-outlet></router-outlet>
+        Back Color: 
+        <select id="select" class="margin-bottom">
+            <option>Transparent</option>
+        </select>
+        <br>
+        Nuns of Columns: <input type="text" placeholder="1">
+        <select id="select">
+            <option>Default</option>
+        </select>
+        <br>
+        Answers space: <input style="margin-top: 15px;" type="text">
+        Rows space: <input style="margin-top: 15px;" type="text">
+        <br>
+        <div class="margin-bottom" style="margin-bottom: 20px;">
+            Render Mode: 
+            <select id="type-answers" name="radio">
+                <option value="radio">Radio</option>
+                <option value="selecionar">Select</option>
+                <option value="caixa">Box</option>
+                <option value="links">Links</option>
+                <option value="normal">Normal</option>
+            </select>
+        </div>
+        <button id="btn" routerLink="/add-answers">Create Answers</button>
+        <input style="width: 15px; height: 15px;" type="checkbox"/> Auto-Advanced
+        <a href="#" style="margin-left: 30px;">Apply auto advanced to al question</a>
+        <div style="margin-top: 200px;"></div>
+    </div>
+</div>

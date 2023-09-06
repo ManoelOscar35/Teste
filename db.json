@@ -1,0 +1,15 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "Qual o seu sexo?"
+    }
+  ],
+  "answers": [
+    {
+      "answer1": "Masculino",
+      "answer2": "Feminino",
+      "id": 1
+    }
+  ]
+}
