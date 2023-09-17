@@ -6,6 +6,7 @@ mat-divider {
 
 .p {
     margin: 5px;
+    cursor: pointer;
 }
 
 #navegacao {
@@ -22,10 +23,8 @@ mat-divider {
     list-style: none;
 }
 
-#select {
-    width: 40px;
-    height: 20px;
-    margin-left: 5px;
+.padding {
+    padding: 5px 0 5px 0;
 }
 
 /* MAIN */
@@ -87,15 +86,28 @@ mat-divider {
     margin-top: 5px;
 }
 
-mat-tab-group {
-    width: 220px;
-}
-
 #flex {
     display: flex;
     flex-direction: row;
     margin-top: 10px;
+}
+
+#flex p {
+    width: 70px;
     cursor: pointer;
+    padding: 5px;
+}
+
+#questionAnswers {
+    border: 1px solid black;
+    margin-top: 15px;
+    background-color: #f5f5ef;
+    width: 800px;
+}
+
+#questionAnswers input {
+    width: 796px;
+    height: 100px;
 }
 
 .border-1 {
@@ -107,6 +119,26 @@ mat-tab-group {
 .border-1 input {
     margin-right: 5px;
 }
+
+.box {
+    background-color: #99c2ff;
+    color: black;
+}
+
+.margin {
+    margin: 10px;
+}
+
+#selectBgColor {
+    background-color: #99c2ff;
+}
+
+
+
+
+
+
+
 
 
 

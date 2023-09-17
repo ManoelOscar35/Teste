@@ -1,34 +1,62 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
-import { AnswerModel } from '../models/answer';
+import { MatDialog } from '@angular/material/dialog';
+import { StoreService } from '../shared/storeservice.service';
+import { Router } from '@angular/router';
+import { Answers } from '../models/answers';
 
 @Component({
   selector: 'app-add-answers',
   templateUrl: './add-answers.component.html',
   styleUrls: ['./add-answers.component.css']
 })
-export class AddAnswersComponent {
+export class AddAnswersComponent implements OnInit {
 
-  answers1!: any;
-  answers2!: any;
-  id: any = 1
+  answersInput: string = '';
+  answers: string[] = [];
+  answersObject1: any;
+  answersObject2: any;
 
-  constructor(private apiService: ApiService) {}
+  constructor(
+    private apiService: ApiService,
+    private dialog: MatDialog,
+    private router: Router) 
+  {}
 
   ngOnInit() {
     
   }
-
-  //Método para enviar os dados para o servidor
-  postAnswers() {
-    this.apiService.postAnswers({answer1: this.answers1, answer2: this.answers2}).subscribe();
-  }
-
-  //Método para editar os dados do servidor
-  editAnswers() {
-    this.apiService.editAnswers({id: this.id, answer1: this.answers1, answer2: this.answers2}).subscribe({
-      next: (res: any) => console.log(res)
-    })
-  }
   
+  createAnswers() {
+    this.answers = this.answersInput.split(' ');
+    for(let i = 0; i <= this.answers.length; i++) {
+      this.answersObject1 = this.answers[0],
+      this.answersObject2 = this.answers[1]
+    }
+    this.apiService.postAnswers({answer: this.answersObject1}).subscribe(
+      {
+        next: (res: Answers) => {
+          this.router.navigate(["/answer"]),
+          window.location.reload()
+        } 
+      }
+    );
+
+    this.apiService.postAnswers({answer: this.answersObject2}).subscribe(
+      {
+        next: (res: Answers) => {
+          this.router.navigate(["/answer"]),
+          window.location.reload()
+        } 
+      }
+    );
+  
+    this.closeComponent();
+
+  }
+
+  closeComponent() {
+    this.dialog.ngOnDestroy()
+  }
+
 }

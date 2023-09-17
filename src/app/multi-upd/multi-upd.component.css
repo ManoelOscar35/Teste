@@ -1,16 +1,14 @@
 input {
     width: 700px;
     height: 100px;
-    width: 100%;
-    border: 1px solid black;
-    height: 500px;
+    border-style: none;
 }
 
 .btn {
     float: right;
-    margin: 5px;
     width: 100px;
     height: 30px;
+    margin: 5px;
     cursor: pointer;
 }
 
@@ -18,9 +16,14 @@ input {
     border: 1px solid black;
 }
 
+.height {
+    height: 500px;
+}
 
-
-
+.width-input {
+    width: 100%;
+    border: 1px solid black;
+}
 
 
 

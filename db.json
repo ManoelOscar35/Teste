@@ -1,15 +1,9 @@
 {
-  "questions": [
+  "typeQuestion": [
     {
-      "id": 1,
-      "question": "Qual o seu sexo?"
-    }
-  ],
-  "answers": [
-    {
-      "answer1": "Masculino",
-      "answer2": "Feminino",
+      "typeQuestion": "RU",
       "id": 1
     }
-  ]
+  ],
+  "answers": []
 }

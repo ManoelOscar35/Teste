@@ -3,30 +3,35 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
-import { MaterialModule } from './shared/material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { QuestionComponent } from './question/question.component';
-import { AnswersComponent } from './answers/answers.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AddAnswersComponent } from './add-answers/add-answers.component';
+import { RouterModule } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { MaterialModule } from './shared/material.module';
+import { AnswersComponent } from './answers/answers.component';
+import { BotaoExcluirComponent } from './botao-excluir/botao-excluir.component';
+import { EditanswersComponent } from './editanswers/editanswers.component';
+import { HomeComponent } from './home/home.component';
+import { MultiUpdComponent } from './multi-upd/multi-upd.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    QuestionComponent,
+    AddAnswersComponent,
     AnswersComponent,
-    AddAnswersComponent
+    BotaoExcluirComponent,
+    EditanswersComponent,
+    HomeComponent,
+    MultiUpdComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    MaterialModule,
+    HttpClientModule,
+    RouterModule,
     FormsModule,
-    ReactiveFormsModule,
-    HttpClientModule
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

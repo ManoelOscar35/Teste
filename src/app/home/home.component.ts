@@ -1,20 +1,31 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { StoreService } from '../shared/storeservice.service';
+import { TypeQuestion } from '../models/typeQuestion';
+import { Subject, takeUntil } from 'rxjs';
+import { Answers } from '../models/answers';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
   
-  singleChoice: string = "";
-  answer1!: string;
-  answer2!: string;
+  singleChoice: string = "RU";
+  answer1: string = "";
+  answer2: string = "";
   index: any;
-  question!: string;
+  question: string = "";
   typeAnswers!: string;
+  data!: TypeQuestion[];
+  questionInput: boolean = false;
+  routerOutlet: boolean = false;
+  corDeFundoQuestion: string = '#f5f5ef';
+  corDeFundoAnswer: string = '#f5f5ef';
+  colorAnswer1: any;
+  colorAnswer2: any;
+  unsubscribe$: Subject<any> = new Subject<any>();
 
   radio: string = "radio";
   selecionar: string = "selecionar";
@@ -28,35 +39,86 @@ export class HomeComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //Obtendo os dados do servidor
-    this.apiService.getAnswers().subscribe({
-      next: (res: any) => {
-        this.answer1 = res[0].answer1,
-        this.answer2 = res[0].answer2,
-        this.index = res[0].id
-      }
-    })
+    this.getTypeQuestion();
+    
+    this.getAnswers();
 
-    //Obtendo os dados do servidor
-    this.apiService.getQuestion().subscribe({
-      next: (res: any) => {
-        this.question = res[0].question
-      }
-    })
-
-    //Obter dado do Observable
+    //Obtendo dado do BehaviorSubject
     this.storeService.getTypeAnswers().subscribe({
-      next: (res: any) => {
-        this.typeAnswers = res,
-        console.log(this.typeAnswers)
+      next: (res: string) => {
+        this.typeAnswers = res
       }
     });
+
+    this.storeService.getColorAnswers().subscribe({
+      next: (res: string) => {
+        if(res === this.answer1) {
+          this.colorAnswer1 = 'red';
+          this.colorAnswer2 = 'black';
+        } 
+        if(res === this.answer2) {
+          this.colorAnswer2 = 'red';
+          this.colorAnswer1 = 'black';
+        }
+      }
+    }); 
+    
+    
   }
 
-  //Atribuir valor ao singleChoice
-  sc() {
-    this.singleChoice = "RU";
+  //Obtendo os dados do servidor
+  getAnswers() {
+    this.apiService.getAnswers()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
+      next: (res: Answers[]) => {
+        this.colorAnswer1 = 'black';
+        this.colorAnswer2 = 'black';
+        this.answer1 = res[0]?.answer
+        this.index = res[0]?.id
+        this.answer2 = res[1]?.answer
+      }
+    })
   }
 
+  //Método para enviar o tipo de questão  pro servidor
+  postTypeQuestion() {
+    this.apiService.postTypeQuestion({typeQuestion: this.singleChoice}).subscribe({
+      next: (res: TypeQuestion) =>  { 
+        window.location.reload()
+      }
+    })
+  }
+
+  getTypeQuestion() {
+    //Obtendo os dados do servidor
+    this.apiService.getTypeQuestion().subscribe({
+      next: (res: TypeQuestion[]) => {
+        this.data = res
+      }
+    })
+  }
+
+  changeColorMethodQuestion() {
+    this.corDeFundoQuestion = 'gray';
+    this.corDeFundoAnswer = '#f5f5ef';
+    this.questionInput = true;
+    this.routerOutlet = false;
+
+
+  }
+
+  changeColorMethodAnswer() {
+    this.corDeFundoAnswer = 'gray';
+    this.corDeFundoQuestion = '#f5f5ef';
+    this.routerOutlet = true;
+    this.questionInput = false;
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next([]);
+  }
 
 }

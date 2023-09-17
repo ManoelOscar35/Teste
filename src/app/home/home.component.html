@@ -1,4 +1,4 @@
-<header id="topo">
+<header>
     <nav>
         <p class="p">Survey ToGo Studio</p>
         <div id="navegacao">
@@ -14,8 +14,8 @@
                 <li>Help</li>
             </ul>
             <mat-divider></mat-divider>
-            <div style="padding: 5px 0 5px 0;">
-                <button (click)="sc();">Single Choice</button>   
+            <div class="padding">
+                <button (click)="postTypeQuestion();">Single Choice</button>   
             </div>
             <mat-divider></mat-divider>
         </div>
@@ -27,19 +27,19 @@
         <div class="background-color">
             <h3>Mode:</h3>
             <div class="radios">
-                <input type="radio">
+                <input type="radio" name="mode" value="draft">
                 <p class="p-radios">Draft</p>
             </div>
             <div class="radios">
-                <input type="radio">
+                <input type="radio" name="mode" value="test[Deployed]">
                 <p class="p-radios">Test [Deployed]</p>
             </div>
             <div class="radios">
-                <input type="radio">
+                <input type="radio" name="mode" value="production[Deployed]">
                 <p class="p-radios">Production [Deployed]</p>
             </div>
             <div class="radios">
-                <input type="radio">
+                <input type="radio" name="mode" value="closed"/>
                 <p class="p-radios">Closed</p>
             </div>
         </div>
@@ -50,7 +50,9 @@
                 <h4>Survey Tree</h4>
                 <mat-divider></mat-divider>
             </div>
-            <p id="m">{{singleChoice}}</p>
+            <div *ngFor="let d of data">
+                <p id="m">{{d.typeQuestion}}</p>
+            </div>
         </div>
         <div class="col-1">
             <p>Question Type:
@@ -67,43 +69,56 @@
                     <option>Default (Bold)</option> 
                 </select>
             </p> 
-            <div>
+            <div id="questionAnswers">
                 <div id="flex">
-                    <p style="margin-right: 10px;" routerLink="/question">Question</p> 
-                    <p routerLink="/answer">Answers</p>
+                    <p [ngStyle]="{'background-color': corDeFundoQuestion}" (click)="changeColorMethodQuestion();">Question</p> 
+                    <p [ngStyle]="{'background-color': corDeFundoAnswer}"  (click)="changeColorMethodAnswer();" routerLink="/answer">Answers</p>
                 </div>
                 <div>
-                    <router-outlet></router-outlet>
+                    <input *ngIf="questionInput" type="text"  [(ngModel)]="question" name="question"><br>
+                    <router-outlet *ngIf="routerOutlet"></router-outlet>
                 </div>
             </div>
         </div>
         <div class="border-1">
             <h2>{{question}}</h2>
-            <div *ngIf="typeAnswers == radio" style="margin: 10px;">
-                <input type="radio" />{{answer1}}
-                <br>
-                <br>
-                <input type="radio" />{{answer2}}
+            <div *ngIf="index && typeAnswers == radio" class="margin">
+                <form>
+                    <input 
+                    type="radio" 
+                    name="sexo" 
+                    value="Masculino" 
+                    />
+                    <span  [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</span>
+                    <br>
+                    <br>
+                    <input 
+                        type="radio" 
+                        name="sexo" 
+                        value="Feminino" 
+                    />
+                    <span [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</span>
+                </form>
             </div>
-            <div *ngIf="typeAnswers == selecionar" style="margin: 10px;">
-                <select name="answers">
-                    <option>{{answer1}}</option>
-                    <option>{{answer2}}</option>
+            <div *ngIf="typeAnswers == selecionar" class="margin">
+                <select name="answer" id="selectBgColor">
+                    <option [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}" >{{answer1}}</option>
+                    <option [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</option>
                 </select>
             </div>
-            <div *ngIf="typeAnswers == caixa" style="margin: 10px;">
-                    {{answer1}}<br>
-                    {{answer2}}
+            <div *ngIf="typeAnswers == caixa" class="margin">
+                <p class="box" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</p><br>
+                <p class="box" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</p>
             </div>
-            <div *ngIf="typeAnswers == links" style="margin: 10px;">
-                <a href="#">{{answer1}}</a>
+            <div *ngIf="typeAnswers == links" class="margin">
+                <a href="#" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</a>
                 <br>
-                <a href="#">{{answer2}}</a>
+                <a href="#" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</a>
             </div>
-            <div *ngIf="typeAnswers == normal" style="margin: 10px;">
-                <p href="#">{{answer1}}</p>
+            <div *ngIf="typeAnswers == normal" class="margin">
+                <p [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</p>
                 <br>
-                <p href="#">{{answer2}}</p>
+                <p [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</p>
             </div>
         </div>
     </div>

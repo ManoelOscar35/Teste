@@ -1,6 +1,8 @@
 <div>
-    <input type="text" [(ngModel)]="answers1">
-    <input type="text" [(ngModel)]="answers2">
-    <input type="button" (click)="postAnswers();"/>
-    <input type="button" (click)="editAnswers();"/>
+    <ul>
+        <li class="border"><input [(ngModel)]="answersInput" name="answerInput" type="text"/></li>
+    </ul>
+    <div>
+        <button class="btn" (click)="createAnswers();">Create Answers</button>
+    </div>
 </div>

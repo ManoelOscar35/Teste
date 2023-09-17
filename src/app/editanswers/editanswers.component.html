@@ -1,0 +1,11 @@
+<div>
+    <div>
+        <button id="colorRed" (click)="colorMethod();">Red</button>
+    </div>
+    <ul>
+        <li class="border"><input id="input" [(ngModel)]="answer"  #input name="answerInput" [ngStyle]="{'color': corAnswer}"  type="text"/></li>
+    </ul>
+    <div>
+        <button class="btn" (click)="edit();">Edit</button>
+    </div>
+</div>

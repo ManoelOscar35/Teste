@@ -1,16 +1,23 @@
-<div>
-    <button class="btn" routerLink="/add-answers">Edit</button>
-    <button class="btn" (click)="delete();">Delete</button>
-    <div style="margin-bottom: 100px;">
-        <p class="inline">Text</p>
-        <p class="inline">Index</p>
-        <p style="margin-top: 15px;">{{answer1}}</p>
-        <p class="index">{{index}}</p>
-        <p style="margin-top: 15px;">{{answer2}}</p>
-        <p class="index">{{index}}</p>
+<div id="container">
+    <button class="btnEdit" (click)="openDialogEdit();">Edit</button>
+    <button class="btnMultiUpd" (click)="openDialogMultiUpd();">Multi-Upd</button>
+    <button class="btnMultiAdd" (click)="openDialog();">Multi-Add</button>
+    <app-botao-excluir></app-botao-excluir>
+    <div class="boxTextIndex">
+       <p class="inline">Text</p>
+       <p class="inline">Index</p>
+       <div (click)="answers1Method();" #answers1 *ngIf="answer1Bool">
+            <p id="p-1">{{answer1}}</p>
+            <p id="p-2">{{index1}}</p>
+       </div>
+       
+       <div (click)="answers2Method();" #answers2 *ngIf="answer2Bool">
+            <p id="p-3">{{answer2}}</p>
+            <p id="p-4">{{index2}}</p>
+       </div>
+       
     </div>
     <div>
-        <router-outlet></router-outlet>
         Back Color: 
         <select id="select" class="margin-bottom">
             <option>Transparent</option>
@@ -24,9 +31,9 @@
         Answers space: <input style="margin-top: 15px;" type="text">
         Rows space: <input style="margin-top: 15px;" type="text">
         <br>
-        <div class="margin-bottom" style="margin-bottom: 20px;">
+        <div class="margin-bottom">
             Render Mode: 
-            <select id="type-answers" name="radio">
+            <select #typeAnswers (click)="typeAnswersMethod();" name="radio" class="selectWidth">
                 <option value="radio">Radio</option>
                 <option value="selecionar">Select</option>
                 <option value="caixa">Box</option>
@@ -34,7 +41,6 @@
                 <option value="normal">Normal</option>
             </select>
         </div>
-        <button id="btn" routerLink="/add-answers">Create Answers</button>
         <input style="width: 15px; height: 15px;" type="checkbox"/> Auto-Advanced
         <a href="#" style="margin-left: 30px;">Apply auto advanced to al question</a>
         <div style="margin-top: 200px;"></div>

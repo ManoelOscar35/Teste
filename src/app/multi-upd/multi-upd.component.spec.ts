@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { QuestionComponent } from './question.component';
+import { MultiUpdComponent } from './multi-upd.component';
 
-describe('QuestionComponent', () => {
-  let component: QuestionComponent;
-  let fixture: ComponentFixture<QuestionComponent>;
+describe('MultiUpdComponent', () => {
+  let component: MultiUpdComponent;
+  let fixture: ComponentFixture<MultiUpdComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [QuestionComponent]
+      declarations: [MultiUpdComponent]
     });
-    fixture = TestBed.createComponent(QuestionComponent);
+    fixture = TestBed.createComponent(MultiUpdComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
