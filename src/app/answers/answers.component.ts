@@ -27,7 +27,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
   @ViewChild('answers1') answers1Atribute!: ElementRef;
   @ViewChild('answers2') answers2Atribute!: ElementRef;
 
-  @ViewChild('typeAnswers') typeAnswersAtribute!: ElementRef;
+  @ViewChild('answersLayout') answersLayoutAtribute!: ElementRef;
 
   constructor(
     private apiService: ApiService,
@@ -43,9 +43,9 @@ export class AnswersComponent implements OnInit, OnDestroy {
     this.answer2Bool = true;
   }
 
-  typeAnswersMethod() {
+  layoutMethod() {
     //Enviando dado pro BehaviorSubject
-    this.storeService.setTypeAnswers(this.typeAnswersAtribute.nativeElement.value)
+    this.storeService.setAnswersLayout(this.answersLayoutAtribute.nativeElement.value)
   }
 
   //Obter as respostas do servidor

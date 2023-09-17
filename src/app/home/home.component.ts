@@ -17,14 +17,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   answer2: string = "";
   index: any;
   question: string = "";
-  typeAnswers!: string;
+  answersLayout!: string;
   data!: TypeQuestion[];
   questionInput: boolean = false;
   routerOutlet: boolean = false;
   corDeFundoQuestion: string = '#f5f5ef';
   corDeFundoAnswer: string = '#f5f5ef';
-  colorAnswer1: any;
-  colorAnswer2: any;
+  colorAnswer1: string = '';
+  colorAnswer2: string = '';
   unsubscribe$: Subject<any> = new Subject<any>();
 
   radio: string = "radio";
@@ -44,9 +44,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.getAnswers();
 
     //Obtendo dado do BehaviorSubject
-    this.storeService.getTypeAnswers().subscribe({
+    this.storeService.getAnswersLayout().subscribe({
       next: (res: string) => {
-        this.typeAnswers = res
+        this.answersLayout = res
       }
     });
 

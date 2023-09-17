@@ -1,4 +1,4 @@
 export interface Answers {
-    id?: string;
+    id?: any;
     answer: string;
 }

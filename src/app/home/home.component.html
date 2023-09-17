@@ -82,7 +82,7 @@
         </div>
         <div class="border-1">
             <h2>{{question}}</h2>
-            <div *ngIf="index && typeAnswers == radio" class="margin">
+            <div *ngIf="index && answersLayout == radio" class="margin">
                 <form>
                     <input 
                     type="radio" 
@@ -100,22 +100,22 @@
                     <span [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</span>
                 </form>
             </div>
-            <div *ngIf="typeAnswers == selecionar" class="margin">
+            <div *ngIf="answersLayout == selecionar" class="margin">
                 <select name="answer" id="selectBgColor">
                     <option [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}" >{{answer1}}</option>
                     <option [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</option>
                 </select>
             </div>
-            <div *ngIf="typeAnswers == caixa" class="margin">
+            <div *ngIf="answersLayout == caixa" class="margin">
                 <p class="box" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</p><br>
                 <p class="box" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</p>
             </div>
-            <div *ngIf="typeAnswers == links" class="margin">
+            <div *ngIf="answersLayout == links" class="margin">
                 <a href="#" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</a>
                 <br>
                 <a href="#" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</a>
             </div>
-            <div *ngIf="typeAnswers == normal" class="margin">
+            <div *ngIf="answersLayout == normal" class="margin">
                 <p [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</p>
                 <br>
                 <p [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</p>

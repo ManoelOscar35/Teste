@@ -15,8 +15,8 @@ export class MultiUpdComponent implements OnInit, AfterViewInit, OnDestroy {
   answers!: string[];
   id1: any;
   id2: any;
-  answer1!: any;
-  answer2!: any;
+  answer1: string = '';
+  answer2: string = '';
   unsubscribe$: Subject<any> = new Subject<any>();
 
   @ViewChild('input') inputAtribute!: ElementRef;

@@ -14,8 +14,8 @@ export class AddAnswersComponent implements OnInit {
 
   answersInput: string = '';
   answers: string[] = [];
-  answersObject1: any;
-  answersObject2: any;
+  answersAtribute1: string = '';
+  answersAtribute2: string = '';
 
   constructor(
     private apiService: ApiService,
@@ -30,10 +30,10 @@ export class AddAnswersComponent implements OnInit {
   createAnswers() {
     this.answers = this.answersInput.split(' ');
     for(let i = 0; i <= this.answers.length; i++) {
-      this.answersObject1 = this.answers[0],
-      this.answersObject2 = this.answers[1]
+      this.answersAtribute1 = this.answers[0],
+      this.answersAtribute2 = this.answers[1]
     }
-    this.apiService.postAnswers({answer: this.answersObject1}).subscribe(
+    this.apiService.postAnswers({answer: this.answersAtribute1}).subscribe(
       {
         next: (res: Answers) => {
           this.router.navigate(["/answer"]),
@@ -42,7 +42,7 @@ export class AddAnswersComponent implements OnInit {
       }
     );
 
-    this.apiService.postAnswers({answer: this.answersObject2}).subscribe(
+    this.apiService.postAnswers({answer: this.answersAtribute2}).subscribe(
       {
         next: (res: Answers) => {
           this.router.navigate(["/answer"]),

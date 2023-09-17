@@ -30,7 +30,7 @@ export class BotaoExcluirComponent implements OnInit {
 
     //Deleta dado do servidor
     this.apiService.deleteAnswers(this.id).subscribe({
-      next: (res: number) => {
+      next: (res: any) => {
         this.router.navigate(["/answer"]),
         window.location.reload()
       }

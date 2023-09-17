@@ -29,11 +29,11 @@ export class StoreService {
     return this.answersColor.asObservable();
   }
 
-  setTypeAnswers(value: string) {
+  setAnswersLayout(value: string) {
     this.typeAnswers.next(value);
   }
 
-  getTypeAnswers() {
+  getAnswersLayout() {
     return this.typeAnswers.asObservable();
   }
 
