@@ -8,7 +8,7 @@
        <p class="inline">Index</p>
 
        <div style="width: 300px;">
-            <ng-container *ngFor="let topic of topics">
+            <ng-container *ngFor="let topic of topics; trackBy: trackByFn">
                 <ng-template [ngIf]="topic.selectedTopics">
                     <div (click)="selectTopic(topic)" class="selecionado container">
                         <span>{{topic.topic}}</span>

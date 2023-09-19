@@ -92,6 +92,10 @@ export class TopicsComponent {
     this.storeService.setBotaoExcluir(topic.id)
   }
 
+  trackByFn(index: number, topic: any): number {
+    return topic.id;
+  }
+
   ngOnDestroy() {
     this.unsubscribe$.next(null);
   }

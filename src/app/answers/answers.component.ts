@@ -94,8 +94,8 @@ export class AnswersComponent implements OnInit, OnDestroy {
     this.storeService.setBotaoExcluir(answer.id); //Envia id para o BehaviorSubject
   }
 
-  trackByFn(index: number, item: any): number {
-    return item.id;
+  trackByFn(index: number, answer: any): number {
+    return answer.id;
   }
 
   ngOnDestroy() {
