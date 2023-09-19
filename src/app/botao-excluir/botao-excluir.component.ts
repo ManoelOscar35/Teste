@@ -35,5 +35,13 @@ export class BotaoExcluirComponent implements OnInit {
         window.location.reload()
       }
     });
+
+    //Deleta dado do servidor
+    this.apiService.deleteTopics(this.id).subscribe({
+      next: (res: any) => {
+        this.router.navigate(["/topics"]),
+        window.location.reload()
+      }
+    });
   }
 }

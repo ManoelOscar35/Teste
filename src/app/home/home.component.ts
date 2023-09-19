@@ -4,6 +4,7 @@ import { StoreService } from '../shared/storeservice.service';
 import { TypeQuestion } from '../models/typeQuestion';
 import { Subject, takeUntil } from 'rxjs';
 import { Answers } from '../models/answers';
+import { Topics } from '../models/topics';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,10 @@ import { Answers } from '../models/answers';
 export class HomeComponent implements OnInit, OnDestroy {
   
   singleChoice: string = "RU";
+  singleChoiceGrid: string = "";
+  gridBool: boolean = false;
+  ruBool: boolean = true;
+  answers!: Answers[];
   answer1: string = "";
   answer2: string = "";
   index: any;
@@ -21,12 +26,22 @@ export class HomeComponent implements OnInit, OnDestroy {
   data!: TypeQuestion[];
   questionInput: boolean = false;
   routerOutlet: boolean = false;
+
+  topics!: Topics[];
+  topic1!: string;
+  topic2!: string;
+  topic3!: string;
+  indexTopicBool: boolean = false;
+  selectBoxBool: boolean = false;
+
   corDeFundoQuestion: string = '#f5f5ef';
   corDeFundoAnswer: string = '#f5f5ef';
+  corDeFundoTopics: string = '#f5f5ef';
   colorAnswer1: string = '';
   colorAnswer2: string = '';
   unsubscribe$: Subject<any> = new Subject<any>();
 
+  selectBox: string = "selectBox";
   radio: string = "radio";
   selecionar: string = "selecionar";
   caixa: string = "caixa";
@@ -43,10 +58,17 @@ export class HomeComponent implements OnInit, OnDestroy {
     
     this.getAnswers();
 
+    this.getTopics();
+
     //Obtendo dado do BehaviorSubject
     this.storeService.getAnswersLayout().subscribe({
       next: (res: string) => {
         this.answersLayout = res
+        if(this.answersLayout == this.selectBox) {
+          this.selectBoxBool = true
+          this.gridBool = false
+        }
+        
       }
     });
 
@@ -66,6 +88,12 @@ export class HomeComponent implements OnInit, OnDestroy {
     
   }
 
+  setGrid() {
+    this.singleChoiceGrid = "Grid";
+    this.gridBool = true;
+    this.ruBool = false;
+  }
+
   //Obtendo os dados do servidor
   getAnswers() {
     this.apiService.getAnswers()
@@ -74,11 +102,29 @@ export class HomeComponent implements OnInit, OnDestroy {
     )
     .subscribe({
       next: (res: Answers[]) => {
+        this.answers = res;
         this.colorAnswer1 = 'black';
         this.colorAnswer2 = 'black';
-        this.answer1 = res[0]?.answer
         this.index = res[0]?.id
+        this.answer1 = res[0]?.answer
         this.answer2 = res[1]?.answer
+      }
+    })
+  }
+
+   //Obtendo os dados do servidor
+   getTopics() {
+    this.apiService.getTopics()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
+      next: (res: Topics[]) => {
+        this.topics = res;
+        this.topic1 = this.topics[0]?.topic;
+        this.topic2 = this.topics[1]?.topic; 
+        this.topic3 = this.topics[2]?.topic;
+        this.indexTopicBool = this.topics[0]?.id;
       }
     })
   }
@@ -104,6 +150,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   changeColorMethodQuestion() {
     this.corDeFundoQuestion = 'gray';
     this.corDeFundoAnswer = '#f5f5ef';
+    this.corDeFundoTopics = '#f5f5ef';
     this.questionInput = true;
     this.routerOutlet = false;
 
@@ -113,12 +160,21 @@ export class HomeComponent implements OnInit, OnDestroy {
   changeColorMethodAnswer() {
     this.corDeFundoAnswer = 'gray';
     this.corDeFundoQuestion = '#f5f5ef';
+    this.corDeFundoTopics = '#f5f5ef';
+    this.routerOutlet = true;
+    this.questionInput = false;
+  }
+
+  changeColorMethodTopics() {
+    this.corDeFundoTopics = 'gray';
+    this.corDeFundoQuestion = '#f5f5ef';
+    this.corDeFundoAnswer = '#f5f5ef';
     this.routerOutlet = true;
     this.questionInput = false;
   }
 
   ngOnDestroy() {
-    this.unsubscribe$.next([]);
+    this.unsubscribe$.next(null);
   }
 
 }

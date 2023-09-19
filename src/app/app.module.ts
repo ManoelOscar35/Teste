@@ -13,6 +13,7 @@ import { BotaoExcluirComponent } from './botao-excluir/botao-excluir.component';
 import { EditanswersComponent } from './editanswers/editanswers.component';
 import { HomeComponent } from './home/home.component';
 import { MultiUpdComponent } from './multi-upd/multi-upd.component';
+import { TopicsComponent } from './topics/topics.component';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { MultiUpdComponent } from './multi-upd/multi-upd.component';
     BotaoExcluirComponent,
     EditanswersComponent,
     HomeComponent,
-    MultiUpdComponent
+    MultiUpdComponent,
+    TopicsComponent
   ],
   imports: [
     BrowserModule,

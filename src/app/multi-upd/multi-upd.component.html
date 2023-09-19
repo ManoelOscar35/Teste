@@ -1,8 +1,13 @@
 <div>
     <ul>
-        <li class="border"><input class="width-input height" [(ngModel)]="answersInput" #input name="answerInput" type="text"/></li>
+        <li class="border">
+            <input class="width-input height" [(ngModel)]="answersFront" [value]="juntarAnswers()" name="answerFront" type="text"/>
+        </li>
     </ul>
     <div>
         <button class="btn" (click)="updateAnswers();">Update Answers</button>
+    </div>
+    <div>
+        <button class="btn" (click)="updateTopics();">Update Topics</button>
     </div>
 </div>

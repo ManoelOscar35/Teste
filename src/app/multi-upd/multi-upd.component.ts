@@ -1,38 +1,36 @@
-import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit} from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { MatDialog } from '@angular/material/dialog';
 import { Answers } from '../models/answers';
 import { Subject, takeUntil } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-multi-upd',
   templateUrl: './multi-upd.component.html',
   styleUrls: ['./multi-upd.component.css']
 })
-export class MultiUpdComponent implements OnInit, AfterViewInit, OnDestroy {
+export class MultiUpdComponent implements OnInit, OnDestroy {
 
-  answersInput: string = '';
+  answersInput: string[] = [];
   answers!: string[];
-  id1: any;
-  id2: any;
-  answer1: string = '';
-  answer2: string = '';
+  answersFront: string = "";
+  topics!: string[];
+  selected: boolean = false;
+  selectedTopics: boolean = false;
+  answers2: Answers[] = [];
   unsubscribe$: Subject<any> = new Subject<any>();
-
-  @ViewChild('input') inputAtribute!: ElementRef;
 
   constructor(
     private apiService: ApiService,
-    private dialog: MatDialog) 
+    private dialog: MatDialog,
+    private router: Router
+  ) 
   {}
 
   ngOnInit() {
     this.getAnswers()
     
-  }
-
-  ngAfterViewInit() {
-    this.inputAtribute.nativeElement.value = this.answersInput;
   }
 
   getAnswers() {
@@ -42,32 +40,36 @@ export class MultiUpdComponent implements OnInit, AfterViewInit, OnDestroy {
     )
     .subscribe({
       next: (res: Answers[]) => {
-        this.answersInput = res[0].answer+' '+res[1].answer
-        this.id1 = res[0].id
-        this.id2 = res[1].id
+        this.answers2 = res;
+        for(let i = 0; i < this.answers2.length; i++) {
+          this.answersInput.push(this.answers2[i].answer) 
+        }
       }
     })
   }
+
+  juntarAnswers(): string {
+    return this.answersInput.join(' ');
+  }
   
   updateAnswers() {
-    this.answers = this.answersInput.split(' ');
-    for(let i = 0; i < this.answers.length; i++) {
-      this.answer1 = this.answers[0];
-      this.answer2 = this.answers[1];
+    this.answers = this.answersFront.split(' ')
+    for(let i = 0; i < this.answers2.length; i++) {
+      this.apiService.editAnswers({id: this.answers2[i].id, answer: this.answers[i], selected: this.selected}).subscribe();
     }
-    this.apiService.editAnswers({id: this.id1, answer: this.answer1}).subscribe({
-      next: (res: Answers) => {
-        window.location.reload()
-      } 
-    });
-    
-    this.apiService.editAnswers({id: this.id2, answer:this.answer2}).subscribe({
-      next: (res: Answers) => {
-        window.location.reload()
-      } 
-    });
-
+    window.location.reload();
     this.closeComponent();
+    
+  }
+
+  updateTopics() {
+    this.topics = this.answersFront.split(' ')
+    for(let i = 0; i < this.answers2.length; i++) {
+      this.apiService.editTopics({id: this.answers2[i].id, topic: this.topics[i], selectedTopics: this.selectedTopics}).subscribe();
+    }
+    window.location.reload();
+    this.closeComponent();
+    
   }
 
   closeComponent() {
@@ -75,7 +77,7 @@ export class MultiUpdComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribe$.next([]);
+    this.unsubscribe$.next(null);
   }
 
 }

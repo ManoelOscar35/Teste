@@ -1,9 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService } from '../services/api.service';
 import { MatDialog } from '@angular/material/dialog';
-import { StoreService } from '../shared/storeservice.service';
 import { Router } from '@angular/router';
-import { Answers } from '../models/answers';
 
 @Component({
   selector: 'app-add-answers',
@@ -12,10 +10,12 @@ import { Answers } from '../models/answers';
 })
 export class AddAnswersComponent implements OnInit {
 
-  answersInput: string = '';
+  selected: boolean = false;
+  input: string = '';
   answers: string[] = [];
-  answersAtribute1: string = '';
-  answersAtribute2: string = '';
+
+  selectedTopics: boolean = false;
+  topics: string[] = [];
 
   constructor(
     private apiService: ApiService,
@@ -28,31 +28,24 @@ export class AddAnswersComponent implements OnInit {
   }
   
   createAnswers() {
-    this.answers = this.answersInput.split(' ');
-    for(let i = 0; i <= this.answers.length; i++) {
-      this.answersAtribute1 = this.answers[0],
-      this.answersAtribute2 = this.answers[1]
+    this.answers = this.input.split(' ');
+    for(let i = 0; i < this.answers.length; i++) {
+      this.apiService.postAnswers({answer: this.answers[i], selected: this.selected}).subscribe();
     }
-    this.apiService.postAnswers({answer: this.answersAtribute1}).subscribe(
-      {
-        next: (res: Answers) => {
-          this.router.navigate(["/answer"]),
-          window.location.reload()
-        } 
-      }
-    );
-
-    this.apiService.postAnswers({answer: this.answersAtribute2}).subscribe(
-      {
-        next: (res: Answers) => {
-          this.router.navigate(["/answer"]),
-          window.location.reload()
-        } 
-      }
-    );
-  
+    
+    this.router.navigate(["/answer"]),
+    window.location.reload()
     this.closeComponent();
+  }
 
+  createTopics() {
+    this.topics = this.input.split(' ');
+    for(let i = 0; i < this.topics.length; i++) {
+      this.apiService.postTopics({topic: this.topics[i], selectedTopics: this.selectedTopics}).subscribe();
+    }
+    this.router.navigate(["/topics"]),
+    window.location.reload()
+    this.closeComponent();
   }
 
   closeComponent() {

@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { TypeQuestion } from '../models/typeQuestion';
 import { Answers } from '../models/answers';
+import { Topics } from '../models/topics';
 
 @Injectable({
   providedIn: 'root'
@@ -43,5 +44,26 @@ export class ApiService {
   // método para excluir dado do servidor
   deleteAnswers(id: any): Observable<any> {
     return this.http.delete<any>(`${environment.BASE_URL}/answers/${id}`)
+  }
+
+  // método para enviar dados ao servidor
+  postTopics(topic: Topics): Observable<Topics> {
+    return this.http.post<Topics>(`${environment.BASE_URL}/topics`, topic)
+  }
+
+  // método para atualizar dados ao servidor
+  editTopics(topics: Topics): Observable<Topics> {
+    return this.http.put<Topics>(`${environment.BASE_URL}/topics/${topics.id}`, topics)
+  }
+
+  // método para obter dados do servidor
+  getTopics(): Observable<Topics[]> {
+    return this.http.get<Topics[]>(`${environment.BASE_URL}/topics`)
+  }
+
+  
+  // método para excluir dado do servidor
+  deleteTopics(id: any): Observable<any> {
+    return this.http.delete<any>(`${environment.BASE_URL}/topics/${id}`)
   }
 }
