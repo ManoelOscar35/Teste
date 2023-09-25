@@ -7,6 +7,7 @@ import { Topics } from '../models/topics';
 import { ApiService } from '../services/api.service';
 import { StoreService } from '../shared/storeservice.service';
 import { MatDialog } from '@angular/material/dialog';
+import { TypeQuestion2 } from '../models/typeQuestion2';
 
 @Component({
   selector: 'app-topics',
@@ -16,6 +17,10 @@ import { MatDialog } from '@angular/material/dialog';
 export class TopicsComponent {
 
   topics!: Topics[];
+  typeQuestion2: TypeQuestion2[] = [];
+  topicsBool!: boolean;
+  topicsBool2: boolean = true;
+  myQuestion!: string;
   unsubscribe$: Subject<any> = new Subject<any>();
 
 
@@ -29,7 +34,28 @@ export class TopicsComponent {
   {}
 
   ngOnInit() {
-    this.getAnswers();
+    this.getTopics();
+
+    this.apiService.getTypeQuestion2().subscribe({
+      next: (res: TypeQuestion2[]) => {
+        this.typeQuestion2 = res,
+        console.log(this.typeQuestion2)
+      }
+    })
+
+    this.storeService.getMyQuestion().subscribe({
+      next: (res: string) => {
+        console.log(res),
+        this.myQuestion = res
+      } 
+    });
+
+    this.storeService.getAnswersBool().subscribe({
+      next: (res: boolean) => {
+        this.topicsBool2 = false;
+        this.topicsBool  = res;
+      } 
+    }); 
   }
 
   layoutMethod() {
@@ -38,7 +64,7 @@ export class TopicsComponent {
   }
 
   //Obter as respostas do servidor
-  getAnswers() {
+  getTopics() {
     this.apiService.getTopics()
     .pipe(
       takeUntil(this.unsubscribe$)
@@ -46,6 +72,15 @@ export class TopicsComponent {
     .subscribe({
       next: (res: Topics[]) => {
         this.topics = res;
+        this.topics = res;
+        this.topicsBool2 = true;
+        this.topicsBool = false
+        const objetosReordenados = this.topics.map((obj, index) => {
+          obj.id = index + 1;
+          return obj;
+        });
+        this.topics = objetosReordenados
+        this.storeService.setRuBool(false);
       }
     });
   }

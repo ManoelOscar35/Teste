@@ -7,7 +7,7 @@
        <p class="inline">Text</p>
        <p class="inline">Index</p>
 
-       <div style="width: 300px;">
+       <div style="width: 300px;" *ngIf="topicsBool2">
             <ng-container *ngFor="let topic of topics; trackBy: trackByFn">
                 <ng-template [ngIf]="topic.selectedTopics">
                     <div (click)="selectTopic(topic)" class="selecionado container">
@@ -23,6 +23,24 @@
                 </ng-template>
             </ng-container>
        </div>
+       <div style="width: 300px;" *ngIf="topicsBool">
+        <ng-container *ngFor="let tQuestion of typeQuestion2; trackBy: trackByFn">
+            <div *ngFor="let topic of tQuestion.typeQuestion.topics; let i = index">
+                <ng-template [ngIf]="topic.selectedTopics" *ngIf="tQuestion.typeQuestion.question === myQuestion">
+                    <div (click)="selectTopic(topic)" class="selecionado container">
+                        <span>{{topic.topic}}</span>
+                        <span style="margin-left: 220px;">{{topic.id}}</span>
+                    </div>
+                </ng-template>
+                <ng-template [ngIf]="!topic.selectedTopics" *ngIf="tQuestion.typeQuestion.question === myQuestion">
+                    <div (click)="selectTopic(topic)" class="container">
+                        <span>{{topic.topic}}</span>
+                        <span style="margin-left: 220px;">{{topic.id}}</span>
+                    </div>
+                </ng-template>
+            </div>
+        </ng-container>
+    </div>
     </div>
     <div>
         <div class="margin-bottom">

@@ -15,10 +15,10 @@
             </ul>
             <mat-divider></mat-divider>
             <div class="padding">
-                <button (click)="postTypeQuestion();">Single Choice</button>   
+                <button (click)="typeQuestion();">Single Choice</button>   
             </div>
             <div class="padding">
-                <button (click)="setGrid();">Single Choice Grid</button>   
+                <button (click)="setGrid();">singleChoiceGrid</button>   
             </div>
             <mat-divider></mat-divider>
         </div>
@@ -54,10 +54,12 @@
                 <mat-divider></mat-divider>
             </div>
             <div *ngFor="let d of data">
-                <p class="m">{{d.typeQuestion}}</p>
+                <span class="m">{{d.typeQuestion.typeQuestion}}</span>
+                <span class="m" (click)="setQuestion(d);">{{d.typeQuestion.question}}</span>
             </div>
-            <div>
-                <p class="m">{{singleChoiceGrid}}</p>
+            <div *ngFor="let d of data2">
+                <span class="m">{{d.typeQuestion.typeQuestion}}</span>
+                <span class="m" (click)="setQuestion2(d);">{{d.typeQuestion.question}}</span>
             </div>
         </div>
         <div class="col-1">
@@ -79,45 +81,76 @@
                 <div id="flex">
                     <p [ngStyle]="{'background-color': corDeFundoQuestion}" (click)="changeColorMethodQuestion();">Question</p> 
                     <p [ngStyle]="{'background-color': corDeFundoAnswer}"  (click)="changeColorMethodAnswer();" routerLink="/answer">Answers</p>
-                    <p *ngIf="gridBool" [ngStyle]="{'background-color': corDeFundoTopics}"  (click)="changeColorMethodTopics();" routerLink="/topics">Topics</p>
+                    <p *ngIf="topicBool" [ngStyle]="{'background-color': corDeFundoTopics}"  (click)="changeColorMethodTopics();" routerLink="/topics">Topics</p>
                 </div>
                 <div>
-                    <input *ngIf="questionInput" type="text"  [(ngModel)]="question" name="question"><br>
-                    <router-outlet *ngIf="routerOutlet"></router-outlet>
+                    <div *ngIf="questionInput; else router">
+                        <input  type="text"  [(ngModel)]="myQuestion" (ngModelChange)="onModelChange()"><br>
+                    </div>
+                    <router-outlet *ngIf="routerAnswerBool"></router-outlet>
+                    <ng-template #router>
+                        <router-outlet ></router-outlet>
+                    </ng-template>
                 </div>
             </div>
         </div>
         <div class="border-1">
-            <h2>{{question}}</h2>
-            <div class="grid-container" *ngIf="indexTopicBool && gridBool">
-                <div class="header-cell"></div>
-                <div class="header-cell" *ngFor="let answer of answers">{{answer.answer}}</div>
-                <div class="row-header">{{topic1}}</div>
-                <div class="data-cell"><input type="radio" name="topic1"/></div>
-                <div class="data-cell"><input type="radio" name="topic1"/></div>
-                <div class="data-cell"><input type="radio" name="topic1"/></div>
-                <div class="row-header">{{topic2}}</div>
-                <div class="data-cell"><input type="radio" name="topic2"/></div>
-                <div class="data-cell"><input type="radio" name="topic2"/></div>
-                <div class="data-cell"><input type="radio" name="topic2"/></div>
-                <div class="row-header">{{topic3}}</div>
-                <div class="data-cell"><input type="radio" name="topic3"/></div>
-                <div class="data-cell"><input type="radio" name="topic3"/></div>
-                <div class="data-cell"><input type="radio" name="topic3"/></div>
+            <h2>{{myQuestion}}</h2>
+            <table style="border: 2px solid black" *ngIf="indexTopicBool && gridBool && answersLayout != selectBox">
+                <thead style="border: 2px solid black">
+                <tr>
+                    <th></th>
+                    <th *ngFor="let answer of answers">{{ answer.answer }}</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngFor="let topic of topics; let i = index">
+                        <tr>
+                            <th>{{topic.topic}}</th>
+                            <td style="border: 2px solid black" *ngFor="let answer of answers" >
+                                <input type="radio" [name]="'answer' + i" style="margin-left: 10px;"/>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </tbody>
+            </table>
+            <table style="border: 2px solid black" *ngIf="gridBool2 && answersLayout != selectBox">
+                <ng-container *ngFor="let d of data2">
+                    <thead style="border: 2px solid black">
+                            <tr>
+                                <th></th>
+                                <th *ngFor="let answer of d.typeQuestion.answers">{{ answer.answer }}</th>
+                            </tr>
+                    </thead>
+                    <tbody>
+                        <ng-container *ngFor="let topic of d.typeQuestion.topics; let i = index">
+                            <tr>
+                                <th>{{topic.topic}}</th>
+                                <td style="border: 2px solid black" *ngFor="let topic of d.typeQuestion.topics">
+                                    <input type="radio" [name]="'answer' + i" style="margin-left: 10px;"/>
+                                </td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </ng-container>
+            </table>
+            <div *ngIf="selectBoxBool && answersLayout == selectBox" class="margin" >
+                <ng-container *ngFor="let topic of topics">
+                    <p>{{topic.topic}}</p>
+                    <select name="answer"  class="selectBox">
+                        <option *ngFor="let answer of answers"  [value]="answer.answer">{{answer.answer }}</option>
+                    </select>
+                </ng-container>
             </div>
-            <div *ngIf="selectBoxBool && answersLayout == selectBox" class="margin">
-                <p>{{topic1}}</p>
-                <select name="answer" class="selectBox">
-                    <option *ngFor="let answer of answers" [value]="answer.answer">{{answer.answer }}</option>
-                </select>
-                <p>{{topic2}}</p>
-                <select name="answer" class="selectBox">
-                    <option *ngFor="let answer of answers" [value]="answer.answer">{{answer.answer }}</option>
-                </select>
-                <p>{{topic3}}</p>
-                <select name="answer" class="selectBox">
-                    <option *ngFor="let answer of answers" [value]="answer.answer">{{answer.answer }}</option>
-                </select>
+            <div *ngIf="gridBool2 && answersLayout == selectBox" class="margin" >
+                <ng-container *ngFor="let d of data2">
+                    <ng-container *ngFor="let topic of d.typeQuestion.topics">
+                        <p>{{topic.topic}}</p>
+                        <select name="answer"  class="selectBox">
+                            <option *ngFor="let answer of d.typeQuestion.answers"  [value]="answer.answer">{{answer.answer }}</option>
+                        </select>
+                    </ng-container>
+                </ng-container>
             </div>
             <div *ngIf="index && ruBool && answersLayout  == radio" class="margin">
                 <form>
@@ -137,25 +170,63 @@
                     <span [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</span>
                 </form>
             </div>
-            <div *ngIf="ruBool && answersLayout == selecionar" class="margin">
+            <div *ngIf="ruBool3 && answersLayout  == radio" class="margin">
+                <form>
+                    <input 
+                    type="radio" 
+                    name="sexo" 
+                    value="Masculino" 
+                    />
+                    <span  [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion1}}</span>
+                    <br>
+                    <br>
+                    <input 
+                        type="radio" 
+                        name="sexo" 
+                        value="Feminino" 
+                    />
+                    <span [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion2}}</span>
+                </form>
+            </div>
+            <div *ngIf="index && ruBool && answersLayout == selecionar" class="margin">
                 <select name="answer" id="selectBgColor">
                     <option [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}" >{{answer1}}</option>
                     <option [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</option>
                 </select>
             </div>
-            <div *ngIf="ruBool && answersLayout == caixa" class="margin">
+            <div *ngIf="ruBool3 && answersLayout == selecionar" class="margin">
+                <select name="answer" id="selectBgColor">
+                    <option [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}" >{{answerTypeQuestion1}}</option>
+                    <option [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion2}}</option>
+                </select>
+            </div>
+            <div *ngIf="index && ruBool && answersLayout == caixa" class="margin">
                 <p class="box" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</p><br>
                 <p class="box" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</p>
             </div>
-            <div *ngIf="ruBool && answersLayout == links" class="margin">
+            <div *ngIf="ruBool3 && answersLayout == caixa" class="margin">
+                <p class="box" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion1}}</p><br>
+                <p class="box" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion2}}</p>
+            </div>
+            <div *ngIf="index && ruBool && answersLayout == links" class="margin">
                 <a href="#" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</a>
                 <br>
                 <a href="#" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</a>
             </div>
-            <div *ngIf="ruBool && answersLayout == normal" class="margin">
+            <div *ngIf="ruBool3 && answersLayout == links" class="margin">
+                <a href="#" [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion1}}</a>
+                <br>
+                <a href="#" [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion2}}</a>
+            </div>
+            <div *ngIf="index && ruBool && answersLayout == normal" class="margin">
                 <p [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answer1}}</p>
                 <br>
                 <p [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answer2}}</p>
+            </div>
+            <div *ngIf="ruBool3 && answersLayout == normal" class="margin">
+                <p [ngStyle]="{'color': colorAnswer1 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion1}}</p>
+                <br>
+                <p [ngStyle]="{'color': colorAnswer2 === 'black' ? 'black' : 'red'}">{{answerTypeQuestion2}}</p>
             </div>
         </div>
     </div>

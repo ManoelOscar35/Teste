@@ -1,5 +1,53 @@
 {
-  "typeQuestion": [],
+  "typeQuestion": [
+    {
+      "id": 1,
+      "typeQuestion": {
+        "typeQuestion": "RU",
+        "question": "Qual é o seu sexo?",
+        "answers": [
+          {
+            "id": 1,
+            "answer": "Masculino",
+            "selected": false
+          },
+          {
+            "id": 2,
+            "answer": "Feminino",
+            "selected": false
+          }
+        ]
+      }
+    }
+  ],
+  "typeQuestion2": [
+    {
+      "typeQuestion": {
+        "typeQuestion": "Grid",
+        "question": "",
+        "answers": [],
+        "topics": []
+      },
+      "id": 1
+    }
+  ],
+  "grid": [],
   "answers": [],
-  "topics": []
+  "topics": [
+    {
+      "topic": "Pitanga",
+      "selectedTopics": false,
+      "id": 1
+    },
+    {
+      "topic": "Uva",
+      "selectedTopics": false,
+      "id": 2
+    },
+    {
+      "topic": "Morango",
+      "selectedTopics": false,
+      "id": 3
+    }
+  ]
 }

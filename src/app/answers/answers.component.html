@@ -6,7 +6,7 @@
     <div class="boxTextIndex">
        <p class="inline">Text</p>
        <p class="inline">Index</p>
-        <div style="width: 300px;">
+        <div style="width: 300px;" *ngIf="answersBool2">
             <ng-container *ngFor="let answer of answers; trackBy: trackByFn">
                 <ng-template [ngIf]="answer.selected">
                     <div (click)="selectAnswer(answer)" class="selecionado container">
@@ -20,6 +20,42 @@
                         <div>{{answer.id}}</div>
                     </div>
                 </ng-template>
+            </ng-container>
+        </div>
+        <div style="width: 300px;" *ngIf="answersBool">
+            <ng-container *ngFor="let tQuestion of typeQuestion; trackBy: trackByFn">
+                <div *ngFor="let answer of tQuestion.typeQuestion.answers; let i = index">
+                    <ng-template [ngIf]="answer.selected" *ngIf="tQuestion.typeQuestion.question === myQuestion">
+                        <div (click)="selectAnswer(answer)" class="selecionado container">
+                            <div>{{answer.answer}}</div>
+                            <div>{{answer.id}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template [ngIf]="!answer.selected" *ngIf="tQuestion.typeQuestion.question === myQuestion">
+                        <div (click)="selectAnswer(answer)" class="container">
+                            <div>{{answer.answer}}</div>
+                            <div>{{answer.id}}</div>
+                        </div>
+                    </ng-template>
+                </div>
+            </ng-container>
+        </div>
+        <div style="width: 300px;" *ngIf="topicsBool">
+            <ng-container *ngFor="let tQuestion of typeQuestion2; trackBy: trackByFn">
+                <div *ngFor="let answer of tQuestion.typeQuestion.answers; let i = index">
+                    <ng-template [ngIf]="answer.selected" *ngIf="tQuestion.typeQuestion.question === myQuestion">
+                        <div (click)="selectAnswer(answer)" class="selecionado container">
+                            <div>{{answer.answer}}</div>
+                            <div>{{answer.id}}</div>
+                        </div>
+                    </ng-template>
+                    <ng-template [ngIf]="!answer.selected" *ngIf="tQuestion.typeQuestion.question === myQuestion">
+                        <div (click)="selectAnswer(answer)" class="container">
+                            <div>{{answer.answer}}</div>
+                            <div>{{answer.id}}</div>
+                        </div>
+                    </ng-template>
+                </div>
             </ng-container>
         </div>
     </div>

@@ -72,6 +72,7 @@ mat-divider {
 .m {
     margin-left: 10px;
     margin-top: 10px;
+    cursor: pointer;
 }
 
 #mr {
@@ -120,6 +121,11 @@ mat-divider {
     margin-right: 5px;
 }
 
+.border-1 table {
+    width: 250px;
+    height: 150px;
+}
+
 .box {
     background-color: #99c2ff;
     color: black;
@@ -133,36 +139,10 @@ mat-divider {
     background-color: #99c2ff;
 }
 
-.grid-container {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    grid-template-rows: repeat(3, 1fr);
-    gap: 10px;
-}
-  
-.header-cell {
-    background-color: #ccc;
-    text-align: center;
-    padding: 5px;
-}
-  
-.row-header {
-    background-color: #ccc;
-    text-align: center;
-    padding: 5px;
-}
-  
-.data-cell {
-    background-color: #f0f0f0;
-    text-align: center;
-    padding: 5px;
-}
-
 .selectBox {
-    width: 190px;
-    height: 40px;
-    margin-bottom: 5px;
-    background-color: #b5cff5;
+    width: 200px;
+    height: 35px;
+    margin-bottom: 10px;
 }
 
 
