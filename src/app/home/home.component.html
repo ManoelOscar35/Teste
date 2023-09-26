@@ -81,7 +81,7 @@
                 <div id="flex">
                     <p [ngStyle]="{'background-color': corDeFundoQuestion}" (click)="changeColorMethodQuestion();">Question</p> 
                     <p [ngStyle]="{'background-color': corDeFundoAnswer}"  (click)="changeColorMethodAnswer();" routerLink="/answer">Answers</p>
-                    <p *ngIf="topicBool" [ngStyle]="{'background-color': corDeFundoTopics}"  (click)="changeColorMethodTopics();" routerLink="/topics">Topics</p>
+                    <p *ngIf="!topicBool" [ngStyle]="{'background-color': corDeFundoTopics}"  (click)="changeColorMethodTopics();" routerLink="/topics">Topics</p>
                 </div>
                 <div>
                     <div *ngIf="questionInput; else router">

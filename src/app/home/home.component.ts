@@ -130,8 +130,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     } 
 
-    if(this.gridBool || this.gridBool2) {
-      this.ruBool = false;
+    if(!this.gridBool || this.gridBool2) {
+      this.topicBool = false;
+      console.log(this.gridBool)
+    } else {
+      this.topicBool = true;
     }
 
     this.storeService.getColorAnswers().subscribe({
@@ -166,33 +169,30 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     }
 
-     
+     console.log(this.gridBool)
   }
 
   setGrid() {
-    this.ruBool = false;
-    localStorage.setItem('question', "");
     this.gridBool = true;
+    localStorage.setItem('question', "");
+   
     this.singleChoiceGrid = 'Grid';
-  
+    this.storeService.setRuBool(false);
     this.storeService.setRuBool2(false);
 
     this.answers.forEach((el: any) => {
       this.apiService.deleteAnswers(el.id).subscribe();
     });
 
-    // this.topics.forEach((el: any) => {
-    //   this.apiService.deleteTopics(el.id).subscribe();
-    // });
-
     this.apiService.postTypeQuestion2({typeQuestion: {typeQuestion:  this.singleChoiceGrid, question: "", answers: [], topics: []}}).subscribe({
         next: (res: TypeQuestion2) => {
           this.getTypeQuestion2();  
         }
       })
-    
-    this.topicBool = true;
+    this.topicBool = false;
     this.gridBool2 = false;
+    console.log(this.gridBool)
+    window.location.reload();
   }
 
   //Obtendo os dados do servidor
@@ -209,6 +209,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.index = res[0]?.id
         this.answer1 = res[0]?.answer
         this.answer2 = res[1]?.answer
+        this.storeService.getRuBool().subscribe({
+          next: (res: boolean) => this.ruBool = res
+        })
         
       }
     })
@@ -227,22 +230,24 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.topic2 = this.topics[1]?.topic; 
         this.topic3 = this.topics[2]?.topic;
         this.indexTopicBool = this.topics[0]?.id;
+        this.gridBool = true;
       }
     })
   }
 
   typeQuestion() {
-    this.topicBool = false;
+    this.topicBool = true;
     this.gridBool = false;
     this.gridBool2 = false;
-    this.ruBool = false;
+    this.storeService.setRuBool(true);
+    console.log(this.ruBool)
     this.apiService.postTypeQuestion({typeQuestion: {typeQuestion:  this.singleChoice}}).subscribe({
       next: (res: TypeQuestion) => {
         this.getTypeQuestion();
         
       }
     });
-    this.storeService.setRuBool(false);
+    
     
     this.storeService.setRuBool2(true);
 
@@ -256,7 +261,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     });
 
     localStorage.setItem('question', '');
-    window.location.reload();
   }
 
   
@@ -278,7 +282,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.gridBool = false;
     this.gridBool2 = false;
     this.ruBool = true;
-    this.topicBool = false;
+    this.topicBool = true;
   }
 
   setQuestion2(d: TypeQuestion2) {

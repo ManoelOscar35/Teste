@@ -11,7 +11,7 @@ export class StoreService {
   private answersColor: BehaviorSubject<string> = new BehaviorSubject<string>("");
   private botaoExcluir: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private routerAnswer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private ruBool: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private ruBool: Subject<boolean> = new Subject<boolean>();
   private ruBool2: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private ruBool3: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private answersBool: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
