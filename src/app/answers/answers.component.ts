@@ -26,8 +26,6 @@ export class AnswersComponent implements OnInit, OnDestroy {
   typeQuestion: TypeQuestion[] = [];
   myQuestion!: string;
 
-  @ViewChild('answersLayout') answersLayoutAtribute!: ElementRef;
-
   constructor(
     private apiService: ApiService,
     private storeService: StoreService,
@@ -72,9 +70,11 @@ export class AnswersComponent implements OnInit, OnDestroy {
   
   }
 
-  layoutMethod() {
+  layoutMethod(event: any) {
+    let select = (event.target as HTMLSelectElement).value;
+    console.log(select)
     //Enviando dado pro BehaviorSubject
-    this.storeService.setAnswersLayout(this.answersLayoutAtribute.nativeElement.value)
+    this.storeService.setAnswersLayout(select)
   }
 
   //Obter as respostas do servidor

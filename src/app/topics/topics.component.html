@@ -45,7 +45,7 @@
     <div>
         <div class="margin-bottom">
             Render Mode: 
-            <select #topicsLayout (click)="layoutMethod();" name="radio" class="selectWidth">
+            <select (click)="layoutMethod($event);" name="radio" class="selectWidth">
                 <option value="selectBox">Select Box</option>
                 <option value="radio">Radio</option>
                 <option value="selecionar">Select</option>

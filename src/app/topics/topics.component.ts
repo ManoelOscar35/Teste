@@ -23,9 +23,6 @@ export class TopicsComponent {
   myQuestion!: string;
   unsubscribe$: Subject<any> = new Subject<any>();
 
-
-  @ViewChild('topicsLayout') topicsLayoutAtribute!: ElementRef;
-
   constructor(
     private apiService: ApiService,
     private storeService: StoreService,
@@ -58,9 +55,11 @@ export class TopicsComponent {
     }); 
   }
 
-  layoutMethod() {
+  layoutMethod(event: any) {
+    let select = (event.target as HTMLSelectElement).value;
+    console.log(select)
     //Enviando dado pro BehaviorSubject
-    this.storeService.setAnswersLayout(this.topicsLayoutAtribute.nativeElement.value)
+    this.storeService.setAnswersLayout(select);
   }
 
   //Obter as respostas do servidor

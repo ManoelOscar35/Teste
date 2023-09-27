@@ -212,7 +212,9 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.storeService.getRuBool().subscribe({
           next: (res: boolean) => this.ruBool = res
         })
-        
+        if(this.topics?.length == 0) {
+          this.ruBool = false;
+        }
       }
     })
   }
