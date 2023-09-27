@@ -14,7 +14,7 @@ export class StoreService {
   private ruBool: Subject<boolean> = new Subject<boolean>();
   private ruBool2: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private ruBool3: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
-  private answersBool: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+  private answersBool: Subject<boolean> = new Subject<boolean>();
   private topicsBool: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private typeQuestionBool: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private question: BehaviorSubject<string> = new BehaviorSubject<string>("");

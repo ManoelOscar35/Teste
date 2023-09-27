@@ -9,6 +9,7 @@ import { Answers } from '../models/answers';
 import { Subject, map, takeUntil } from 'rxjs';
 import { TypeQuestion } from '../models/typeQuestion';
 import { TypeQuestion2 } from '../models/typeQuestion2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-answers',
@@ -19,7 +20,7 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
   answers!: Answers[];
   unsubscribe$: Subject<any> = new Subject<any>();
-  answersBool!: boolean;
+  answersBool: boolean = false;
   answersBool2: boolean = true;
   topicsBool: boolean = false;
   typeQuestion2: TypeQuestion2[] = [];
@@ -29,7 +30,8 @@ export class AnswersComponent implements OnInit, OnDestroy {
   constructor(
     private apiService: ApiService,
     private storeService: StoreService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private router: Router
   )
   {}
 
@@ -37,7 +39,9 @@ export class AnswersComponent implements OnInit, OnDestroy {
     this.getAnswers();
 
     this.apiService.getTypeQuestion2().subscribe({
-      next: (res: TypeQuestion2[]) => this.typeQuestion2 = res
+      next: (res: TypeQuestion2[]) => {
+        this.typeQuestion2 = res
+      }
     });
 
     this.storeService.getMyQuestion().subscribe({
@@ -49,9 +53,16 @@ export class AnswersComponent implements OnInit, OnDestroy {
 
     this.storeService.getAnswersBool().subscribe({
       next: (res: boolean) => {
-        this.answersBool2 = false;
         this.answersBool  = res;
+        console.log(this.answersBool)
         this.topicsBool = false
+        if(!this.answersBool) {
+          this.answersBool2 = false;
+        }
+        if(this.answersBool) {
+          this.getAnswers()
+        }
+        
       } 
     }); 
 
@@ -86,8 +97,10 @@ export class AnswersComponent implements OnInit, OnDestroy {
     .subscribe({
       next: (res: Answers[]) => {
         this.answers = res;
-        this.answersBool2 = true;
-        this.answersBool = false
+        if(this.answersBool) {
+          this.answersBool2 = false;
+        } 
+       
         const objetosReordenados = this.answers.map((obj, index) => {
           obj.id = index + 1;
           return obj;

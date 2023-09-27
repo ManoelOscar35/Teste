@@ -15,10 +15,11 @@ import { TypeQuestion2 } from '../models/typeQuestion2';
 })
 export class HomeComponent implements OnInit, OnDestroy {
   index2: any;
-  singleChoice: string = 'RU';
+  singleChoice: string = '';
   singleChoiceGrid: string = "";
   gridBool: boolean = false;
   gridBool2: boolean = false;
+  barraBool: boolean = true;
   ruBool: boolean = false;
   ruBool2: boolean = false;
   ruBool3: boolean = false;
@@ -64,6 +65,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   links: string = "links";
   normal: string = "normal";
   
+
   constructor(
     private apiService: ApiService,
     private storeService: StoreService,
@@ -130,13 +132,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     } 
 
-    if(!this.gridBool || this.gridBool2) {
-      this.topicBool = false;
-      console.log(this.gridBool)
-    } else {
-      this.topicBool = true;
-    }
-
     this.storeService.getColorAnswers().subscribe({
       next: (res: string) => {
         if(res === this.answer1) {
@@ -172,28 +167,37 @@ export class HomeComponent implements OnInit, OnDestroy {
      console.log(this.gridBool)
   }
 
+
   setGrid() {
+    this.barraBool = false;
     this.gridBool = true;
-    localStorage.setItem('question', "");
+    this.topicBool = true;
    
     this.singleChoiceGrid = 'Grid';
+    this.myQuestion = "";
+
     this.storeService.setRuBool(false);
     this.storeService.setRuBool2(false);
+    this.gridBool2 = false;
+    this.storeService.setAnswersBool(false)
+    
+    this.apiService.postTypeQuestion2({typeQuestion: {typeQuestion:  this.singleChoiceGrid, question: "", answers: [], topics: []}}).subscribe({
+      next: (res: TypeQuestion2) => {
+        this.getTypeQuestion2();  
+        
+      }
+    })
 
     this.answers.forEach((el: any) => {
       this.apiService.deleteAnswers(el.id).subscribe();
+      
     });
 
-    this.apiService.postTypeQuestion2({typeQuestion: {typeQuestion:  this.singleChoiceGrid, question: "", answers: [], topics: []}}).subscribe({
-        next: (res: TypeQuestion2) => {
-          this.getTypeQuestion2();  
-        }
-      })
-    this.topicBool = false;
-    this.gridBool2 = false;
-    console.log(this.gridBool)
-    window.location.reload();
+    this.getAnswers();
+    
   }
+
+  
 
   //Obtendo os dados do servidor
   getAnswers() {
@@ -212,9 +216,15 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.storeService.getRuBool().subscribe({
           next: (res: boolean) => this.ruBool = res
         })
-        if(this.topics?.length == 0) {
-          this.ruBool = false;
+        if(this.answers.length === 2) {
+          this.barraBool = false
         }
+        if(this.answers.length === 3) {
+          this.ruBool = false;
+          this.barraBool = false
+          this.topicBool = true;
+        }
+
       }
     })
   }
@@ -238,7 +248,10 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   typeQuestion() {
-    this.topicBool = true;
+    this.barraBool = false;
+    this.topicBool = false;
+    this.singleChoice = 'RU';
+    this.myQuestion = ""
     this.gridBool = false;
     this.gridBool2 = false;
     this.storeService.setRuBool(true);
@@ -252,7 +265,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     
     
     this.storeService.setRuBool2(true);
-
     
     this.answers.forEach((el: any) => {
       this.apiService.deleteAnswers(el.id).subscribe();
@@ -262,7 +274,7 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.apiService.deleteTopics(el.id).subscribe();
     });
 
-    localStorage.setItem('question', '');
+    
   }
 
   
@@ -273,18 +285,19 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(this.myQuestion)
     localStorage.setItem('question', this.myQuestion);
     this.storeService.setAnswersBool(true);
-    this.storeService.setRuBool(false);
     this.answers.forEach((el: any) => {
       this.apiService.deleteAnswers(el.id).subscribe()
     });
+    this.ruBool = false
+    this.barraBool = false;
     this.ruBool3 = true;
     this.answerTypeQuestion1 = d.typeQuestion.answers[0]?.answer;
     this.answerTypeQuestion2 = d.typeQuestion.answers[1]?.answer;
     console.log(this.answerTypeQuestion1)
     this.gridBool = false;
     this.gridBool2 = false;
-    this.ruBool = true;
-    this.topicBool = true;
+    this.topicBool = false;
+
   }
 
   setQuestion2(d: TypeQuestion2) {
@@ -303,6 +316,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.ruBool3 = false;
     this.gridBool2 = true;
     this.topicBool = true;
+    this.gridBool = false;
+    this.barraBool = false;
+    this.topics.forEach((el: any) => {
+      this.apiService.deleteTopics(el.id).subscribe()
+    });
     this.topicTypeQuestion1 = d.typeQuestion.answers[0]?.answer;
     this.topicTypeQuestion2 = d.typeQuestion.answers[1]?.answer;
     console.log(this.answerTypeQuestion1)

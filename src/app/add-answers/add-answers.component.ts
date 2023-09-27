@@ -60,7 +60,7 @@ export class AddAnswersComponent implements OnInit {
     this.storeService.setRouterAnswer(true);
     this.storeService.setRuBool2(true);
     this.storeService.setRuBool3(true);
-    window.location.reload();
+    window.location.reload()
     this.closeComponent();
   }
 
@@ -81,7 +81,7 @@ export class AddAnswersComponent implements OnInit {
     
     this.storeService.setRouterAnswer(true);
     this.router.navigate(["/topics"]);
-    window.location.reload();
+    window.location.reload()
     this.closeComponent();
   }
 
