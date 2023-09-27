@@ -1,67 +1,7 @@
 {
   "typeQuestion": [
-    {
-      "id": 1,
-      "typeQuestion": {
-        "typeQuestion": "RU",
-        "question": "Qual é o seu sexo?",
-        "answers": [
-          {
-            "id": 1,
-            "answer": "Masculino",
-            "selected": false
-          },
-          {
-            "id": 2,
-            "answer": "Feminino",
-            "selected": false
-          }
-        ]
-      }
-    }
   ],
   "typeQuestion2": [
-    {
-      "id": 1,
-      "typeQuestion": {
-        "typeQuestion": "Grid",
-        "question": "Você comeria essas frutas, sim, não ou talvez",
-        "answers": [
-          {
-            "id": 1,
-            "answer": "Sim",
-            "selected": false
-          },
-          {
-            "id": 2,
-            "answer": "Não",
-            "selected": false
-          },
-          {
-            "id": 3,
-            "answer": "Talvez",
-            "selected": false
-          }
-        ],
-        "topics": [
-          {
-            "id": 1,
-            "topic": "Pitanga",
-            "selectedTopics": false
-          },
-          {
-            "id": 2,
-            "topic": "Manga",
-            "selectedTopics": false
-          },
-          {
-            "id": 3,
-            "topic": "Pêra",
-            "selectedTopics": false
-          }
-        ]
-      }
-    }
   ],
   "answers": [],
   "grid": [],
