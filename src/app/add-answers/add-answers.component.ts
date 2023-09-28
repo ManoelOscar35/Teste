@@ -7,6 +7,7 @@ import { TypeQuestion } from '../models/typeQuestion';
 import { Answers } from '../models/answers';
 import { TypeQuestion2 } from '../models/typeQuestion2';
 import { Topics } from '../models/topics';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-add-answers',
@@ -22,6 +23,7 @@ export class AddAnswersComponent implements OnInit {
   question!: string;
   myQuestion: string = "";
   data: TypeQuestion[] = [];
+  unsubscribe$: Subject<any> = new Subject<any>();
 
   selectedTopics: boolean = false;
   topics: string[] = [];
@@ -36,7 +38,11 @@ export class AddAnswersComponent implements OnInit {
 
   ngOnInit() { 
 
-    this.apiService.getAnswers().subscribe({
+    this.apiService.getAnswers()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: Answers[]) =>  {
         this.answers2 = res,
         console.log(this.answers2)
@@ -83,6 +89,10 @@ export class AddAnswersComponent implements OnInit {
     this.router.navigate(["/topics"]);
     window.location.reload()
     this.closeComponent();
+  }
+
+  ngOnDestroy() {
+    this.unsubscribe$.next(null);
   }
 
   closeComponent() {

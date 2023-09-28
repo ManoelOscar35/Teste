@@ -115,11 +115,7 @@ export class MultiUpdComponent implements OnInit, OnDestroy {
         res.forEach((el: any) => {
           console.log(el.id)
           if(el.typeQuestion.question === 'Qual é o seu sexo?') {
-            this.apiService.editTypeQuestion({id: 1, typeQuestion: {typeQuestion: 'RU', question: 'Qual é o seu sexo?', answers: [ {id: 1, answer: this.answers[0], selected: this.selected}, {id: 2, answer: this.answers[1], selected: this.selected}]}}).subscribe({
-              next: (res: TypeQuestion) => {
-                window.location.reload()
-              }
-            })
+            this.apiService.editTypeQuestion({id: 1, typeQuestion: {typeQuestion: 'RU', question: 'Qual é o seu sexo?', answers: [ {id: 1, answer: this.answers[0], selected: this.selected}, {id: 2, answer: this.answers[1], selected: this.selected}]}}).subscribe()
           }
         });
       }
@@ -133,12 +129,8 @@ export class MultiUpdComponent implements OnInit, OnDestroy {
           console.log(el.id)
           if(res[1].typeQuestion.question === 'Você comeria essas frutas, sim, não ou talvez?') {
             this.apiService.editTypeQuestion2({id: 1, typeQuestion: {typeQuestion: 'Grid', question: 'Você comeria essas frutas, sim, não ou talvez?', answers: [ {id: 1, answer: this.answers[0], selected: this.selected}, {id: 2, answer: this.answers[1], selected: this.selected},
-            {id: 3, answer: this.answers[2], selected: this.selected}]}}).subscribe({
-              next: (res: TypeQuestion) => {
-              }
-          })
-          }
-            
+            {id: 3, answer: this.answers[2], selected: this.selected}]}}).subscribe()
+          } 
         });
       }
     })

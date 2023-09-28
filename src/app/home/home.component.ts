@@ -85,33 +85,53 @@ export class HomeComponent implements OnInit, OnDestroy {
 
 
 
-    this.storeService.getRuBool().subscribe({
+    this.storeService.getRuBool()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: any) =>  {
         this.ruBool = res
        }
       
     });
 
-    this.storeService.getRuBool2().subscribe({
+    this.storeService.getRuBool2()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: any) =>  {
         this.ruBool2 = res
        }
       
     });
 
-    this.storeService.getRuBool3().subscribe({
+    this.storeService.getRuBool3()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: any) =>  {
         this.ruBool3 = res
        }
       
     });
 
-    this.storeService.getRouterAnswer().subscribe({
+    this.storeService.getRouterAnswer()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: boolean) => this.routerAnswerBool = res
     });
 
     //Obtendo dado do BehaviorSubject
-    this.storeService.getAnswersLayout().subscribe({
+    this.storeService.getAnswersLayout()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: string) => {
         this.answersLayout = res
         if(this.answersLayout == this.selectBox) {
@@ -132,7 +152,11 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     } 
 
-    this.storeService.getColorAnswers().subscribe({
+    this.storeService.getColorAnswers()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: string) => {
         if(res === this.answer1) {
           this.colorAnswer1 = 'red';
@@ -175,7 +199,7 @@ export class HomeComponent implements OnInit, OnDestroy {
    
     this.singleChoiceGrid = 'Grid';
     this.myQuestion = "";
-
+    localStorage.removeItem('question')
     this.storeService.setRuBool(false);
     this.storeService.setRuBool2(false);
     this.gridBool2 = false;
@@ -219,10 +243,11 @@ export class HomeComponent implements OnInit, OnDestroy {
         if(this.answers.length === 2) {
           this.barraBool = false
         }
-        if(this.answers.length === 3) {
+        if(this.answers.length > 2) {
           this.ruBool = false;
           this.barraBool = false
           this.topicBool = true;
+          this.ruBool3 = false;
         }
 
       }
@@ -252,6 +277,7 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.topicBool = false;
     this.singleChoice = 'RU';
     this.myQuestion = ""
+    localStorage.removeItem('question')
     this.gridBool = false;
     this.gridBool2 = false;
     this.storeService.setRuBool(true);
@@ -285,19 +311,22 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(this.myQuestion)
     localStorage.setItem('question', this.myQuestion);
     this.storeService.setAnswersBool(true);
-    this.answers.forEach((el: any) => {
-      this.apiService.deleteAnswers(el.id).subscribe()
-    });
     this.ruBool = false
     this.barraBool = false;
     this.ruBool3 = true;
+    this.answers.forEach((el: any) => {
+      this.apiService.deleteAnswers(el.id).subscribe()
+    });
+    this.topics.forEach((el: any) => {
+      this.apiService.deleteTopics(el.id).subscribe()
+    });
     this.answerTypeQuestion1 = d.typeQuestion.answers[0]?.answer;
     this.answerTypeQuestion2 = d.typeQuestion.answers[1]?.answer;
+    
     console.log(this.answerTypeQuestion1)
     this.gridBool = false;
     this.gridBool2 = false;
     this.topicBool = false;
-
   }
 
   setQuestion2(d: TypeQuestion2) {
@@ -313,7 +342,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.apiService.deleteAnswers(el.id).subscribe()
     });
     this.ruBool = false;
-    this.ruBool3 = false;
     this.gridBool2 = true;
     this.topicBool = true;
     this.gridBool = false;
@@ -324,12 +352,16 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.topicTypeQuestion1 = d.typeQuestion.answers[0]?.answer;
     this.topicTypeQuestion2 = d.typeQuestion.answers[1]?.answer;
     console.log(this.answerTypeQuestion1)
-
+    this.ruBool3 = false;
   }
 
   getTypeQuestion() {
     //Obtendo os dados do servidor
-    this.apiService.getTypeQuestion().subscribe({
+    this.apiService.getTypeQuestion()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: TypeQuestion[]) => {
         this.colorAnswer1 = 'black';
         this.colorAnswer2 = 'black';
@@ -342,7 +374,11 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   getTypeQuestion2() {
     //Obtendo os dados do servidor
-    this.apiService.getTypeQuestion2().subscribe({
+    this.apiService.getTypeQuestion2()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: TypeQuestion2[]) => {
         this.data2 = res;
 

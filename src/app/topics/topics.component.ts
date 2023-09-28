@@ -33,21 +33,33 @@ export class TopicsComponent {
   ngOnInit() {
     this.getTopics();
 
-    this.apiService.getTypeQuestion2().subscribe({
+    this.apiService.getTypeQuestion2()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: TypeQuestion2[]) => {
         this.typeQuestion2 = res,
         console.log(this.typeQuestion2)
       }
     })
 
-    this.storeService.getMyQuestion().subscribe({
+    this.storeService.getMyQuestion()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: string) => {
         console.log(res),
         this.myQuestion = res
       } 
     });
 
-    this.storeService.getAnswersBool().subscribe({
+    this.storeService.getAnswersBool()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: boolean) => {
         this.topicsBool2 = false;
         this.topicsBool  = res;

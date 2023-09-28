@@ -38,20 +38,32 @@ export class AnswersComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.getAnswers();
 
-    this.apiService.getTypeQuestion2().subscribe({
+    this.apiService.getTypeQuestion2()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: TypeQuestion2[]) => {
         this.typeQuestion2 = res
       }
     });
 
-    this.storeService.getMyQuestion().subscribe({
+    this.storeService.getMyQuestion()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: string) => {
         console.log(res),
         this.myQuestion = res
       } 
     });
 
-    this.storeService.getAnswersBool().subscribe({
+    this.storeService.getAnswersBool()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: boolean) => {
         this.answersBool  = res;
         console.log(this.answersBool)
@@ -66,13 +78,21 @@ export class AnswersComponent implements OnInit, OnDestroy {
       } 
     }); 
 
-    this.storeService.getTopicsBool().subscribe({
+    this.storeService.getTopicsBool()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: boolean) => {
         this.topicsBool = res;
       } 
     });
 
-    this.apiService.getTypeQuestion().subscribe({
+    this.apiService.getTypeQuestion()
+    .pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe({
       next: (res: TypeQuestion[]) => {
         this.typeQuestion = res,
         console.log(this.typeQuestion)
