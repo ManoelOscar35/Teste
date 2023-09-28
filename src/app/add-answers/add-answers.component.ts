@@ -58,13 +58,14 @@ export class AddAnswersComponent implements OnInit {
       });
     }
     
-    this.apiService.editTypeQuestion({id: 1, typeQuestion: {typeQuestion: "RU", question: 'Qual é o seu sexo?', answers: [  {id: 1, answer: this.answers[0], selected:  this.selected}, {id: 2, answer: this.answers[1], selected: this.selected}]} }).subscribe({
-      next: (res: TypeQuestion) => this.storeService.setRuBool(true)
-    });
+    if(this.answers.length === 2) {
+      this.apiService.editTypeQuestion({id: 1, typeQuestion: {typeQuestion: "RU", question: 'Qual é o seu sexo?', answers: [  {id: 1, answer: this.answers[0], selected:  this.selected}, {id: 2, answer: this.answers[1], selected: this.selected}]} }).subscribe({
+        next: (res: TypeQuestion) => this.storeService.setRuBool(true)
+      });
+    }
   
     this.router.navigate(["/answer"])
     this.storeService.setRouterAnswer(true);
-    this.storeService.setRuBool2(true);
     this.storeService.setRuBool3(true);
     window.location.reload()
     this.closeComponent();

@@ -96,17 +96,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       
     });
 
-    this.storeService.getRuBool2()
-    .pipe(
-      takeUntil(this.unsubscribe$)
-    )
-    .subscribe({
-      next: (res: any) =>  {
-        this.ruBool2 = res
-       }
-      
-    });
-
     this.storeService.getRuBool3()
     .pipe(
       takeUntil(this.unsubscribe$)
@@ -201,7 +190,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.myQuestion = "";
     localStorage.removeItem('question')
     this.storeService.setRuBool(false);
-    this.storeService.setRuBool2(false);
     this.gridBool2 = false;
     this.storeService.setAnswersBool(false)
     
@@ -289,9 +277,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       }
     });
     
-    
-    this.storeService.setRuBool2(true);
-    
     this.answers.forEach((el: any) => {
       this.apiService.deleteAnswers(el.id).subscribe();
     });
@@ -310,7 +295,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.myQuestion = d.typeQuestion.question;
     console.log(this.myQuestion)
     localStorage.setItem('question', this.myQuestion);
-    this.storeService.setAnswersBool(true);
     this.ruBool = false
     this.barraBool = false;
     this.ruBool3 = true;
@@ -327,6 +311,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.gridBool = false;
     this.gridBool2 = false;
     this.topicBool = false;
+    this.storeService.setAnswersBool(true);
+    this.getTypeQuestion();
   }
 
   setQuestion2(d: TypeQuestion2) {
@@ -336,8 +322,8 @@ export class HomeComponent implements OnInit, OnDestroy {
     console.log(this.myQuestion)
     localStorage.setItem('question', this.myQuestion);
     this.storeService.setAnswersBool(true);
-    this.storeService.setTopicsBool(true);
     this.storeService.setRuBool(false);
+    this.storeService.setTopicsBool(true);
     this.answers.forEach((el: any) => {
       this.apiService.deleteAnswers(el.id).subscribe()
     });
@@ -349,10 +335,14 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.topics.forEach((el: any) => {
       this.apiService.deleteTopics(el.id).subscribe()
     });
+    
+    
     this.topicTypeQuestion1 = d.typeQuestion.answers[0]?.answer;
     this.topicTypeQuestion2 = d.typeQuestion.answers[1]?.answer;
     console.log(this.answerTypeQuestion1)
     this.ruBool3 = false;
+    
+    
   }
 
   getTypeQuestion() {

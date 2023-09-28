@@ -12,7 +12,7 @@ export class StoreService {
   private botaoExcluir: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   private routerAnswer: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private ruBool: Subject<boolean> = new Subject<boolean>();
-  private ruBool2: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
+  private topicsBool2: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(true);
   private ruBool3: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private answersBool: Subject<boolean> = new Subject<boolean>();
   private topicsBool: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -71,12 +71,12 @@ export class StoreService {
     return this.ruBool.asObservable();
   }
 
-  setRuBool2(value: boolean) {
-    this.ruBool2.next(value)
+  setTopicsBool2(value: boolean) {
+    this.topicsBool2.next(value)
   }
 
-  getRuBool2() {
-    return this.ruBool2.asObservable();
+  getTopicsBool2() {
+    return this.topicsBool2.asObservable();
   }
 
   setRuBool3(value: boolean) {

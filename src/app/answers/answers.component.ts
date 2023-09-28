@@ -67,9 +67,9 @@ export class AnswersComponent implements OnInit, OnDestroy {
       next: (res: boolean) => {
         this.answersBool  = res;
         console.log(this.answersBool)
-        this.topicsBool = false
         if(!this.answersBool) {
           this.answersBool2 = false;
+          this.topicsBool = false
         }
         if(this.answersBool) {
           this.getAnswers()
@@ -172,7 +172,6 @@ export class AnswersComponent implements OnInit, OnDestroy {
     console.log(answer)
     this.storeService.setAnswers(answer.answer); // Enviar a resposta pro componente Edit
     this.storeService.setBotaoExcluir(answer.id); //Envia id para o BehaviorSubject
-    this.storeService.setRuBool2(false)
   }
 
   trackByFn(index: number, answer: any): number {

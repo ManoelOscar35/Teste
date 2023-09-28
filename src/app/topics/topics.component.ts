@@ -65,6 +65,8 @@ export class TopicsComponent {
         this.topicsBool  = res;
       } 
     }); 
+
+    
   }
 
   layoutMethod(event: any) {
